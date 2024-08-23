@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+
+    <!-- Tailwind and DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <a href="index.html"></a>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans leading-relaxed">
+    <main class="container mx-auto">        
+        <!-- Page Title -->
+        <h1 class="text-4xl font-bold mb-8 text-center text-red-600">JavaScript Concepts</h1>
+
+        <!-- Scope of var, let, and const -->
+        <section class="mb-8 p-6 bg-white shadow-lg rounded-lg">
+            <h2 class="text-2xl font-semibold mb-4 text-purple-600">Scope of var, let and const:</h2>
+            <p class="mb-4">
+                <strong>var:</strong> The <code>var</code> keyword declares a variable with function scope or globally scoped if not within a function. Variables declared with <code>var</code> are hoisted, meaning they are available before the actual declaration, though they are initialized as <code>undefined</code> until the declaration line is executed.
+            </p>
+            <p class="mb-4">
+                <strong>let:</strong> The <code>let</code> keyword declares a block-scoped variable, which means the variable is only accessible within the block it is defined in. <code>let</code> is not hoisted in the same way as <code>var</code>, so it cannot be accessed before its declaration.
+            </p>
+            <p>
+                <strong>const:</strong> The <code>const</code> keyword also declares a block-scoped variable, but unlike <code>let</code>, the value assigned to a <code>const</code> variable cannot be reassigned. However, if the <code>const</code> variable is an object or array, the contents of that object or array can be modified.
+            </p>
+        </section>
+
+        <!-- Use Cases of null and undefined -->
+        <section class="mb-8 p-6 bg-white shadow-lg rounded-lg">
+            <h2 class="text-2xl font-semibold mb-4 text-green-600">Use Cases of null and undefined:</code></h2>
+            <p class="mb-4">
+                <strong>null:</strong> <code>null</code> is an assignment value that represents the intentional absence of any object value. It is typically used to indicate that a variable should have an empty or non-existent value.
+            </p>
+            <p>
+                <strong>undefined:</strong> <code>undefined</code> is a value that JavaScript assigns to a variable that has been declared but not yet assigned a value. It is also the default return value of functions that do not explicitly return anything.
+            </p>
+        </section>
+
+        <!-- REST API -->
+        <section class="mb-8 p-6 bg-white shadow-lg rounded-lg">
+            <h2 class="text-2xl font-semibold mb-4 text-fuchsia-600">What is a REST API?:</h2>
+            <p>
+                A <strong>REST API</strong> (Representational State Transfer Application Programming Interface) is a set of rules and conventions for building and interacting with web services. REST APIs use HTTP methods such as GET, POST, PUT, DELETE, etc., to perform operations on resources identified by URLs. RESTful services are stateless, meaning that each request from a client contains all the information needed to process the request, without relying on any stored context on the server.
+            </p>
+        </section>
+
+        <button class="btn btn-primary font-normal text-lg bg-red-600 hover:bg-black text-white border-none rounded-lg px-5 py-2"><a style="text-decoration: none;" href="index.html">Go Back</a></button>
+    </main>
+</body>
+
+</html>

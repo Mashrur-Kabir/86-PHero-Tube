@@ -15,7 +15,6 @@ const buttonAction = async () => {
 
 buttonAction();
 
-
 // loading Videos from API
 const loadVideo = async (categoryId) => {
     //initiating loader
@@ -78,16 +77,22 @@ const displayVideos = (data) => {
             cardSection.appendChild(card);
         });
     }else{
-        cardSection.classList.remove('grid');
-        cardSection.innerHTML = `
-        <div class="flex flex-col items-center justify-center my-40">
-            <img class="w-1/6 mb-10" src="icons/noResFound.png" alt=":(">
-            <h1 class="text-5xl font-bold leading-tight">Oops!!Sorry, There is no Content Here</h1>
-        </div>
-        `
+        emptyAlert();
     }
     toggleLoader(false); // hide spinning loader after successful data load
 };
+
+// empty alert function:
+const emptyAlert = () => {
+    const cardSection = document.getElementById('card-section');
+    cardSection.classList.remove('grid');
+    cardSection.innerHTML = `
+    <div class="flex flex-col items-center justify-center my-40">
+        <img class="w-1/6 mb-10" src="icons/noResFound.png" alt=":(">
+        <h1 class="text-5xl font-bold leading-tight">Oops!!Sorry, There is no Content Here</h1>
+    </div>
+    `
+}
 
 // time conversion
 const timeConvert = (seconds) => {
@@ -117,3 +122,76 @@ const toggleLoader = (isLoading) => {
     }
 }
 
+// Sort By View buttons onclick:
+const sortVideos = () => {
+    const cardSection = document.getElementById('card-section');
+
+    if(cardSection.children.length === 0) {
+        emptyAlert(); // Display empty alert
+    }
+
+    const videoCards = Array.from(cardSection.children); // converts the collection of child elements inside the cardSection container into an array
+
+    const videosData = videoCards.map(card => { // card iterates on every array element
+        // This selects the element that contains the view count text
+        const viewCountElement = card.querySelector('#viewNumber'); //selects the id of where views reside.
+        
+        // The view count text (e.g., "1.1K") is passed to parseViewCount
+        const viewCount = viewCountElement.innerText;
+        
+        return {
+            card, // the original card element
+            views: parseViewCount(viewCount) // Here, viewCount is passed to parseViewCount
+        };
+    });
+
+    // Sort the videosData by views in descending order
+    videosData.sort((a, b) => b.views - a.views); // If b.views is greater than a.views, the result will be positive, meaning b should come before a in the sorted order (descending order).
+
+    // Re-render sorted videos
+    cardSection.innerHTML = '';
+    videosData.forEach(video => {
+        cardSection.appendChild(video.card); // this is why returning the 'card' from sortVideos was important 
+    });
+}
+
+// Function to convert view count string to number (only 'k' format)
+const parseViewCount = (viewCount) => {
+    if (!viewCount) return 0;
+
+    const numberPart = parseFloat(viewCount.replace(/[^0-9.]/g, '')); // The expression viewCount.replace(/[^0-9.]/g, '') is a JavaScript string method used to remove all characters from the viewCount string except for digits (0-9) and decimal points (.)
+    return numberPart * 1000; // Convert 'k' to thousands
+};
+
+/* #Note-1: after "const videoCards = Array.from(cardSection.children);", videoCards will look like:
+
+    [
+        {
+            // First video card element
+            tagName: "DIV", // tagName and className are default properties provided by the DOM (Document Object Model) API in JavaScript
+            className: "video-card",
+            innerHTML: `
+                <p id="viewNumber">1.2K</p>
+                <h2>Video Title 1</h2>
+            `
+        },
+        {
+            // Second video card element
+            tagName: "DIV".....
+        }
+    ] 
+        
+#Note-2: the returned obj from sortVideo will look like this:
+
+    [
+        {
+            card: <div class="video-card">...</div>, // The entire HTML element for the video card
+            views: 1200 // The parsed view count
+        },
+        {
+            card: <div class="video-card">...</div>,
+            views: 900000
+        }
+    ]
+    
+    */
